@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📦 发货模板中心</title>
+<style>
+  :root { --bg: #0f0f1a; --card: #1a1a2e; --accent: #16213e; --text: #e0e0e0; --text2: #888; --blue: #4fc3f7; --green: #66bb6a; --orange: #ffa726; --pink: #ec407a; --purple: #ab47bc; --teal: #26a69a; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+  .header { text-align: center; padding: 40px 20px 10px; max-width: 900px; }
+  .header h1 { font-size: 32px; background: linear-gradient(135deg, #4fc3f7, #ab47bc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .header p { color: var(--text2); margin: 8px 0 4px; font-size: 14px; }
+  .grid { max-width: 960px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; padding: 20px 0; }
+  .card { background: var(--card); border-radius: 12px; padding: 18px; border: 1px solid #2a2a4a; transition: 0.2s; display: flex; flex-direction: column; }
+  .card:hover { border-color: #3a3a6a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+  .card .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; color: #fff; width: fit-content; margin-bottom: 8px; }
+  .card h3 { font-size: 14px; font-weight: 600; margin-bottom: 2px; line-height: 1.4; }
+  .card .ext { color: var(--text2); font-size: 12px; margin-bottom: 8px; }
+  .card .fields { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 12px; flex: 1; align-content: flex-start; }
+  .card .fields span { background: rgba(255,255,255,0.05); padding: 2px 7px; border-radius: 4px; font-size: 11px; color: #999; }
+  .card .download-btn { display: block; text-align: center; padding: 10px 0; border-radius: 8px; font-size: 14px; font-weight: 500; text-decoration: none; background: rgba(79,195,247,0.12); color: var(--blue); border: 1px solid rgba(79,195,247,0.25); transition: 0.2s; cursor: pointer; }
+  .card .download-btn:hover { background: rgba(79,195,247,0.25); }
+  .footer { text-align: center; padding: 30px; color: #444; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>📦 发货模板中心</h1>
+  <p>6个模板 · 在线下载 · 即取即用</p>
+</div>
+<div class="grid" id="cardGrid"></div>
+<div class="footer"><p>共 6 个模板 · 点击 ⬇ 下载 保存文件</p></div>
+<script>
+const files = [
+  {n:"至臻薯薯订单导入模板",f:"至臻薯薯订单导入模板.xls",s:"26 KB",b:"订单导入",c:"#4fc3f7",h:["下单时间","买家帐号","收货人姓名","手机","地址","商品名称","规格","商品编码","数量","快递公司","快递单号","备注"]},
+  {n:"从茸菌菇订单导入模板",f:"从茸菌菇订单导入模板.xls",s:"1.2 MB",b:"订单导入",c:"#66bb6a",h:["下单时间","买家帐号","收货人姓名","手机","地址","商品编码","商品名称","数量","商品单价","快递公司","快递单号","备注"]},
+  {n:"佛山仓订单导入模板",f:"佛山仓订单导入模板.xls",s:"45 KB",b:"多仓出库",c:"#ffa726",h:["店铺名称","原始单号","收件人","手机","地址","发货条件","应收合计","商家编码","货品数量","备注","订单类别","证件号码","批次号","标记"]},
+  {n:"叽里咕噜推单模板-寄样-正常订单",f:"叽里咕噜推单模板-寄样-正常订单.xlsx",s:"15 KB",b:"寄样管理",c:"#ec407a",h:["渠道","日期","收件人","联系电话","寄样地址","产品名称","产品规格","数量","寄样单号","特殊要求","快递费用","备注"]},
+  {n:"吉客云订单导入模板V1",f:"吉客云订单导入模板V1.xlsx",s:"20 KB",b:"全渠道",c:"#ab47bc",h:["导入编号","客户账号","收货人","手机","收货地址","客户备注","销售渠道名称","货品编号","数量","单价","业务员","跟单员","标记"]},
+  {n:"三匠红薯订单导入模板V1",f:"三匠红薯订单导入模板V1.xlsx",s:"16 KB",b:"分销线下",c:"#26a69a",h:["平台订单号","收件人姓名","收件人手机","收件人地址","分销商家编码","条形码","货品数量","货品单价","金额小计","邮费收入","店铺","买家留言","客服备注","买家昵称"]}
+];
+files.forEach(f=>{
+  const d=document.createElement("div");d.className="card";
+  d.innerHTML=`<span class="badge" style="background:${f.c}">${f.b}</span><h3>${f.n}</h3><div class="ext">${f.f} · ${f.s} · ${f.h.length}列</div><div class="fields">${f.h.map(x=>'<span>'+x+'</span>').join('')}</div><a class="download-btn" href="${f.f}" download>⬇ 下载</a>`;
+  document.getElementById("cardGrid").appendChild(d);
+});
+</script>
+</body>
+</html>
